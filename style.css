@@ -1,0 +1,60 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.main-container {
+  border: 2px solid skyblue;
+  height: 300px;
+  width: 600px;
+  margin: auto;
+  margin-top: 20%;
+}
+
+.content {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.answer-container {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  margin: auto;
+  padding: 10px;
+}
+
+.hide {
+  display: none;
+}
+
+.btn {
+  margin-top: 10px;
+  background: skyblue;
+  border-radius: 10px;
+}
+
+.start-button {
+  margin-top: 70px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: skyblue;
+}
+
+.result-text {
+  margin-top: 20px;
+  font-style: italic;
+}
+
+.result-text.incorrect {
+  color: red;
+}
+
+.result-text.correct {
+  color: green;
+}
+
