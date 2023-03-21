@@ -45,6 +45,24 @@
   background: skyblue;
 }
 
+.next-button {
+  margin-top: 50px;
+  background: black;
+  padding: 5px 12px;
+  border-radius: 10px;
+  color: skyblue;
+  
+}
+
+.results-button {
+  margin-top: 50px;
+  background: lightgreen;
+  padding: 5px 12px;
+  border-radius: 10px;
+  color: black;
+  
+}
+
 .result-text {
   margin-top: 20px;
   font-style: italic;

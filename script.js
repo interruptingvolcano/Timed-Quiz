@@ -5,15 +5,31 @@ const nextButton = document.querySelector('.next-button');
 const questionText = document.querySelector('.question');
 const answerButtons = document.querySelectorAll('.btn');
 let resultText = document.createElement('p');
+let questionCount = 1;
+const correctArray = [];
+const incorrectArray = [];
+const resultsContainer = document.createElement('div');
+const resultsButton = document.querySelector('.results-button');
 
-const startQuiz = function() {
+const startQuiz = function(index) {
+    console.log(questionCount);
+    if (questionCount >= questions.length) {
+      questionContainerElement.classList.add('hide');
+      answerContainerElement.classList.add('hide');
+      nextButton.classList.add('hide');
+      return;
+    }
+    if (localStorage.length === 0) {
+      index = 0;
+    }
+    nextButton.classList.add('hide');
     localStorage.clear();
     startButton.classList.add('hide');
     questionContainerElement.classList.remove('hide');
     answerContainerElement.classList.remove('hide');
-    questionText.innerText = questions[0].question;
+    questionText.innerText = questions[index].question;
     resetState();
-    questions[0].answers.forEach((answer) => {
+    questions[index].answers.forEach((answer) => {
       const button = document.createElement('button');     
       button.innerText = answer.text;
       button.classList.add('btn');
@@ -25,9 +41,8 @@ const startQuiz = function() {
     })
   }
 
-
 function selectAnswer(e) {
-  if (localStorage.length === 1) {
+  if (localStorage.length >= 1) {
     return
   }
 
@@ -39,6 +54,7 @@ function selectAnswer(e) {
     answerContainerElement.appendChild(resultText);
     localStorage.setItem('answerStatus', 'correct');
     console.log(localStorage);
+    correctArray.push(1);
 
   } else {
     resultText.innerText = 'incorrect!';
@@ -46,15 +62,42 @@ function selectAnswer(e) {
     resultText.classList.add('incorrect');    
     answerContainerElement.appendChild(resultText);
     localStorage.setItem('answerStatus', 'incorrect');
+    incorrectArray.push(1);
   }
+  nextButton.classList.remove('hide');
+  if ((questions.length) === questionCount) {
+    addResultsButton()
+  };
+}
+
+function nextQuestion() {
+  let qIndex = questionCount;
+  startQuiz(qIndex);
+  questionCount += 1;
+};
+
+function addResultsButton() {
+  nextButton.classList.add('hide');
+  resultsButton.classList.remove('hide');
   
+  
+}
+
+function endOfQuiz() {
+  const results = document.createElement('p');
+  resultsContainer.appendChild(results);
+  results.innerText = `You answered ${correctArray.length} out of ${questions.length} correctly. Your score is ${correctArray.length/questions.length}`
+  console.log('pfee');
 }
 
 function resetState() {
   answerContainerElement.innerHTML = '';
 }
 
-startButton.addEventListener('click', startQuiz);
+startButton.addEventListener('click', startQuiz, localStorage.clear());
+
+nextButton.addEventListener('click', nextQuestion);
+
 
 const questions = [
   {
