@@ -42,15 +42,15 @@
   margin-top: 70px;
   padding: 10px 20px;
   border-radius: 10px;
-  background: skyblue;
+  background: lightcoral;
 }
 
 .next-button {
   margin-top: 50px;
-  background: black;
+  background: rgb(203, 149, 203);
   padding: 5px 12px;
   border-radius: 10px;
-  color: skyblue;
+  color: black;
   
 }
 
@@ -74,5 +74,43 @@
 
 .result-text.correct {
   color: green;
+}
+
+.results-score {
+  font-size: 1.2rem;
+  color: black;
+  text-align: center;
+}
+
+.initials-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.initials-label {
+  margin-right: 10px;
+  color: green;
+}
+
+.initials {
+  width: 40px;
+  border-radius: 5px;
+  background: whitesmoke;
+  margin: auto;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.submit-score-container {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.submit-score {
+  padding: 5px 7px;
+  border-radius: 10px;
+  background: skyblue;
 }
 
