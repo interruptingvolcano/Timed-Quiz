@@ -13,6 +13,14 @@ const correctArray = [];
 const incorrectArray = [];
 const resultsContainer = document.createElement('div');
 const resultsButton = document.querySelector('.results-button');
+const submitScore = document.createElement('button');
+const submitScoreContainer = document.createElement('div');
+const results = document.createElement('p');
+const initialsContainer = document.createElement('div');
+const initialsLabel = document.createElement('label');
+const initials = document.createElement('input');
+const scoreArray = [];
+const initialsArray = [];
 
 const startQuiz = function(index) {
     console.log(questionCount);
@@ -88,12 +96,6 @@ function endOfQuiz() {
   questionContainerElement.classList.add('hide');
   answerContainerElement.classList.add('hide');
   resultsButton.classList.add('hide');
-  const results = document.createElement('p');
-  const initialsContainer = document.createElement('div');
-  const initialsLabel = document.createElement('label');
-  const initials = document.createElement('input');
-  const submitScore = document.createElement('button');
-  const submitScoreContainer = document.createElement('div');
   submitScore.classList.add('submit-score');
   initialsContainer.classList.add('initials-container');
   initialsLabel.setAttribute('for', 'initials');
@@ -116,6 +118,12 @@ function endOfQuiz() {
   `;
 }
 
+function scoreSubmission() {
+  scoreArray.push((correctArray.length/questions.length) * 100);
+  initialsArray.push(initials.value);
+  console.log(scoreArray);
+}
+
 function resetState() {
   answerContainerElement.innerHTML = '';
 }
@@ -125,6 +133,8 @@ startButton.addEventListener('click', startQuiz);
 nextButton.addEventListener('click', nextQuestion);
 
 resultsButton.addEventListener('click', endOfQuiz);
+
+submitScore.addEventListener('click', scoreSubmission);
 
 const questions = [
   {
