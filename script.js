@@ -1,4 +1,4 @@
-localStorage.clear()
+localStorage.clear();
 
 const startButton = document.querySelector('.start-button');
 const mainContainer = document.querySelector('.main-container');
@@ -7,10 +7,12 @@ const answerContainerElement = document.querySelector('.answer-container');
 const nextButton = document.querySelector('.next-button');
 const questionText = document.querySelector('.question');
 const answerButtons = document.querySelectorAll('.btn');
+const body = document.querySelector('.body');
 let resultText = document.createElement('p');
 let questionCount = 1;
-const correctArray = [];
-const incorrectArray = [];
+let correctArray = [];
+let incorrectArray = [];
+let answersArray = [];
 const resultsContainer = document.createElement('div');
 const resultsButton = document.querySelector('.results-button');
 const submitScore = document.createElement('button');
@@ -19,11 +21,21 @@ const results = document.createElement('p');
 const initialsContainer = document.createElement('div');
 const initialsLabel = document.createElement('label');
 const initials = document.createElement('input');
-const scoreArray = [];
-const initialsArray = [];
+const topScoresContainer = document.createElement('div');
+const topScores = document.createElement('p');
+const scoreDate = new Date().toLocaleDateString();
+const topScoresTitleContainer = document.createElement('div');
+const topScoresTitle = document.createElement('h2');
+const newQuizButtonContainer = document.createElement('div');
+const newQuizButton = document.createElement('button');
+let scoreIndex = 0;
+let toStorage = [];
+
+let scoreArray = [];
+let initialsArray = [];
+let topScoresArray = [];
 
 const startQuiz = function(index) {
-    console.log(questionCount);
     if (questionCount >= questions.length) {
       questionContainerElement.classList.add('hide');
       answerContainerElement.classList.add('hide');
@@ -60,19 +72,22 @@ function selectAnswer(e) {
   const selectedButton = e.target;
   if (selectedButton.dataset.correct) {
     resultText.innerText = 'Correct!';
+    resultText.classList.remove('incorrect');
     resultText.classList.add('result-text');
     resultText.classList.add('correct');
     answerContainerElement.appendChild(resultText);
-    localStorage.setItem('answerStatus', 'correct');
-    console.log(localStorage);
+    localStorage.setItem('answerStatus', 'correct'); 
+    answersArray.push(1);  
     correctArray.push(1);
 
   } else {
     resultText.innerText = 'incorrect!';
+    resultText.classList.remove('correct');
     resultText.classList.add('result-text');
     resultText.classList.add('incorrect');    
     answerContainerElement.appendChild(resultText);
     localStorage.setItem('answerStatus', 'incorrect');
+    answersArray.push(1);
     incorrectArray.push(1);
   }
   nextButton.classList.remove('hide');
@@ -93,9 +108,11 @@ function addResultsButton() {
 }
 
 function endOfQuiz() {
+  initials.value = '';
   questionContainerElement.classList.add('hide');
   answerContainerElement.classList.add('hide');
   resultsButton.classList.add('hide');
+  resultsContainer.classList.remove('hide');
   submitScore.classList.add('submit-score');
   initialsContainer.classList.add('initials-container');
   initialsLabel.setAttribute('for', 'initials');
@@ -116,12 +133,54 @@ function endOfQuiz() {
   mainContainer.appendChild(resultsContainer);
   results.innerText = `You answered ${correctArray.length} out of ${questions.length} correctly. Your score is ${(correctArray.length/questions.length) * 100}%.
   `;
-}
+};
 
 function scoreSubmission() {
   scoreArray.push((correctArray.length/questions.length) * 100);
   initialsArray.push(initials.value);
-  console.log(scoreArray);
+  resultsContainer.classList.add('hide');
+  topScoresTitleContainer.classList.remove('hide');
+  topScores.classList.remove('hide');
+  newQuizButtonContainer.classList.remove('hide');
+  topScoresContainer.classList.add('top-scores-container');
+  topScoresTitleContainer.classList.add('top-scores-title-container');
+  topScoresTitleContainer.appendChild(topScoresTitle);
+  mainContainer.appendChild(topScoresTitleContainer);
+  topScoresContainer.appendChild(topScores);
+  mainContainer.appendChild(topScoresContainer); 
+  
+  if (topScoresArray.length === 0) {
+    topScoresTitle.innerText = 'Top Scores';
+    topScores.innerText = `${scoreDate} - ${initialsArray[0]}: ${scoreArray[0]}%`;
+    toStorage.push(topScores.innerText)
+    localStorage.setItem('topScores', toStorage);
+    localStorage.getItem('topScores');
+
+  } else {
+    topScoresTitle.innerText = 'Top Scores';
+    topScores.innerHTML = `${scoreDate} - ${initialsArray[scoreIndex]}: ${scoreArray[scoreIndex]}% <br>` +
+    topScoresArray[scoreIndex - 1];
+    toStorage.push(`${scoreDate} - ${initialsArray[scoreIndex]}: ${scoreArray[scoreIndex]}%`);
+    localStorage.setItem('topScores', toStorage);
+    localStorage.getItem('topScores');
+  };
+
+  newQuizButtonContainer.classList.add('new-quiz-btn-container');
+  newQuizButton.classList.add('new-quiz-btn');
+  newQuizButton.innerText = 'New Quiz'
+  newQuizButtonContainer.appendChild(newQuizButton);
+  body.appendChild(newQuizButtonContainer);
+  correctArray = [];
+  topScoresArray.push(topScores.innerHTML);
+  scoreIndex += 1;
+};
+
+function startNewQuiz() {
+  topScoresTitleContainer.classList.add('hide');
+  topScores.classList.add('hide');
+  newQuizButtonContainer.classList.add('hide');
+  questionCount = 1;
+  startQuiz(0);
 }
 
 function resetState() {
@@ -135,6 +194,8 @@ nextButton.addEventListener('click', nextQuestion);
 resultsButton.addEventListener('click', endOfQuiz);
 
 submitScore.addEventListener('click', scoreSubmission);
+
+newQuizButton.addEventListener('click', startNewQuiz)
 
 const questions = [
   {

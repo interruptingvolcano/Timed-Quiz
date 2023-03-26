@@ -8,8 +8,10 @@
 }
 
 .main-container {
-  border: 2px solid skyblue;
-  height: 300px;
+  border: 3px solid skyblue;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px gray;
+  height: 340px;
   width: 600px;
   margin: auto;
   margin-top: 20%;
@@ -17,13 +19,13 @@
 
 .content {
   text-align: center;
-  margin-top: 50px;
+  margin-top: 40px;
 }
 
 .answer-container {
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 250px;
   margin: auto;
   padding: 10px;
 }
@@ -36,13 +38,20 @@
   margin-top: 10px;
   background: skyblue;
   border-radius: 10px;
+  padding: 5px;
 }
 
 .start-button {
-  margin-top: 70px;
+  margin-top: 90px;
   padding: 10px 20px;
   border-radius: 10px;
   background: lightcoral;
+  color: white;
+  font-size: 1rem;
+}
+
+.question {
+  font-size: 1.2rem;
 }
 
 .next-button {
@@ -66,6 +75,7 @@
 .result-text {
   margin-top: 20px;
   font-style: italic;
+  font-size: 1.5rem;
 }
 
 .result-text.incorrect {
@@ -112,5 +122,30 @@
   padding: 5px 7px;
   border-radius: 10px;
   background: skyblue;
+}
+
+.top-scores-container {
+  font-size: 1.2rem;
+  text-align: center;
+  color: green;
+  margin-top: 10px;
+}
+
+.top-scores-title-container {
+  text-align: center;
+}
+
+.new-quiz-btn-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.new-quiz-btn {
+  background-color: skyblue;
+  padding: 7px 7px;
+  border-radius: 5px;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
 }
 
